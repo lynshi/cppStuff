@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-// Required by for routine
+// Required by fork routine
 #include <sys/types.h>
 #include <unistd.h>
 
