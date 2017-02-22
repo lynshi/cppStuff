@@ -10,6 +10,6 @@ int main(){
         //usleep(1000000);
         pid_t pID = vfork();
         if(pID == 0)
-            execlp("cansend", "cansend", "vcan0", "123#123456", (char *) 0);
+            execlp("cansend", "cansend", "vcan0", "000#AA", (char *) 0);
     }
 }
