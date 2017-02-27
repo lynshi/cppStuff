@@ -17,7 +17,7 @@ int main(){
 }
 
 unsigned long long calcFib(unsigned long long elem){
-    unsigned long long fibNum=1, buf;
+    unsigned long long fibNum=0, buf;
     int pipefd[2];
 
     if(elem <= 2){
@@ -28,15 +28,18 @@ unsigned long long calcFib(unsigned long long elem){
     pid_t pID = fork();
 
     if(pID == 0){
+        close(pipefd[0]);
         fibNum = calcFib(elem-2);
-        std::cout << "Elem: " << elem << " Elem-2: " << fibNum << std::endl;
+        //std::cout << "Elem: " << elem << " Elem-2: " << fibNum << std::endl;
         write(pipefd[1], &fibNum, sizeof(fibNum));
         exit(0);
     }
     else{
+        close(pipefd[1]);
         fibNum = calcFib(elem-1);
-        std::cout << "Elem: " << elem << " Elem-1: " << fibNum << std::endl;
+        //std::cout << "Elem: " << elem << " Elem-1: " << fibNum << std::endl;
         wait(NULL);
-        return fibNum += read(pipefd[0], &buf, sizeof(buf));
+        read(pipefd[0], &buf, sizeof(buf));
+        return fibNum += buf;
     }
 }
