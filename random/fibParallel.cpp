@@ -7,15 +7,18 @@
 
 unsigned long long calcFib(unsigned long long);
 
-unsigned long long times;
+//unsigned long long times;
 
 int main(){
+    unsigned long long times;
+
     std::cout << "Which element to display? ";
     //std::cout << "How many elements to display? ";
     std::cin >> times;
 
+    //pid_t temp = fork();
     // Added to check for consistency
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < 5; i++)
         std::cout << calcFib(times) << std::endl;
 }
 
