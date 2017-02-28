@@ -13,6 +13,7 @@ int main(){
 
     for(unsigned long long i = 2; i < times; i++){
         fibNums[i%3] = fibNums[(i-1) % 3] + fibNums[(i-2) % 3];
+        cout << "Elem: " << i+1 << " Value: " << fibNums[i%3] << endl;
     }
-    cout << fibNums[(times-1)%3] << endl;
+    //cout << fibNums[(times-1)%3] << endl;
 }
