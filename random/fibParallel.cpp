@@ -7,13 +7,16 @@
 
 unsigned long long calcFib(unsigned long long);
 
+unsigned long long times;
+
 int main(){
-    unsigned long long times;
     std::cout << "Which element to display? ";
     //std::cout << "How many elements to display? ";
     std::cin >> times;
 
-    std::cout << calcFib(times) << std::endl;
+    // Added to check for consistency
+    for(int i = 0; i < 10; i++)
+        std::cout << calcFib(times) << std::endl;
 }
 
 unsigned long long calcFib(unsigned long long elem){
@@ -30,14 +33,20 @@ unsigned long long calcFib(unsigned long long elem){
     if(pID == 0){
         close(pipefd[0]);
         fibNum = calcFib(elem-2);
-        //std::cout << "Elem: " << elem << " Elem-2: " << fibNum << std::endl;
+        /*
+        if(elem == times)
+            std::cout << "Elem: " << elem-2 << " This fibNum: " << fibNum << std::endl;
+        */
         write(pipefd[1], &fibNum, sizeof(fibNum));
         exit(0);
     }
     else{
         close(pipefd[1]);
         fibNum = calcFib(elem-1);
-        //std::cout << "Elem: " << elem << " Elem-1: " << fibNum << std::endl;
+        /*
+        if(elem == times)
+            std::cout << "Elem: " << elem-1 << " This fibNum: " << fibNum << std::endl;
+        */
         wait(NULL);
         read(pipefd[0], &buf, sizeof(buf));
         return fibNum += buf;
