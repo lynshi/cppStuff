@@ -26,21 +26,20 @@ int main(){
 
     outFile.close();
     string fullString="";
-    char buffer[10];
     int tempInt;
 
-    for(int i = 0; i < 5; i++){
+    for(int i = 1; i < 10; i += 2){
         for(int j = 0; j < 3; j++){
-            sprintf(buffer, "%d", j);
-            fullString += tempString;
+            tempInt = rand() % 10;
+            fullString += char(tempInt+48);
         }
         writeToFile(fullString);
+        fullString = "";
     }
 }
 
 void writeToFile(string writeThis){
-    cout << writeThis << endl;
-    return;
+    //cout << writeThis << endl;
     vector<string> fileLines;
     string temp;
 
@@ -54,13 +53,34 @@ void writeToFile(string writeThis){
     }
 
     inFile.close();
+    outFile.open("testOut.txt");
 
+    bool orderFlag;
 
     for(int i = 0; i < fileLines.size(); i++){
-        for(int j = 0; j < fileLines.at(i).length(); j++){
-            if(char(fileLines.at(i).at(j)) < char()){
-
+        orderFlag = 0;
+        for(int j = 0; j < writeThis.length(); j++){
+            //cout << fileLines.at(i).at(j) << " " << writeThis.at(j) << endl;
+            if(fileLines.at(i).at(j) < writeThis.at(j)){
+                outFile << fileLines.at(i) << endl;
+                orderFlag = 1;
+                break;
+            }
+            else if(fileLines.at(i).at(j) > writeThis.at(j)){
+                break;
+            }
+        }
+        if(!orderFlag){
+            outFile << writeThis << endl;
+            for(; i< fileLines.size(); i++){
+                outFile << fileLines.at(i) << endl;
             }
         }
     }
+
+    if(orderFlag){
+        outFile << writeThis << endl;
+    }
+
+    outFile.close();
 }
