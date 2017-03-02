@@ -8,6 +8,7 @@
 using namespace std;
 
 void writeToFile(string);
+int findShorter(string&, string&);
 
 int main(){
     ofstream outFile;
@@ -59,7 +60,8 @@ void writeToFile(string writeThis){
 
     for(int i = 0; i < fileLines.size(); i++){
         orderFlag = 0;
-        for(int j = 0; j < writeThis.length(); j++){
+        int smallestLength = findShorter(fileLines.at(i),writeThis);
+        for(int j = 0; j < smallestLength; j++){
             //cout << fileLines.at(i).at(j) << " " << writeThis.at(j) << endl;
             if(fileLines.at(i).at(j) < writeThis.at(j)){
                 outFile << fileLines.at(i) << endl;
@@ -83,4 +85,11 @@ void writeToFile(string writeThis){
     }
 
     outFile.close();
+}
+
+int findShorter(string &s1, string &s2){
+    if(s1.length() < s2.length())
+        return s1.length();
+    else
+        return s2.length();
 }
