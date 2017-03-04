@@ -4,22 +4,28 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <ctime>
+using namespace std;
 
 unsigned long long calcFib(unsigned long long);
+int findShorter(string&, string&);
 
 unsigned long long times;
 
 int main(){
     //unsigned long long times;
 
-    std::cout << "Which element to display? ";
+    cout << "Which element to display? ";
     //std::cout << "How many elements to display? ";
-    std::cin >> times;
+    cin >> times;
 
     //pid_t temp = fork();
     // Added to check for consistency
     //for(int i = 0; i < 10; i++)
-        std::cout << calcFib(times) << std::endl;
+    cout << calcFib(times) << endl;
 }
 
 unsigned long long calcFib(unsigned long long elem){
@@ -44,6 +50,7 @@ unsigned long long calcFib(unsigned long long elem){
         exit(0);
     }
     else{
+        ofstream outFile("fibParallel.txt");
         close(pipefd[1]);
         fibNum = calcFib(elem-1);
         /*
@@ -53,7 +60,16 @@ unsigned long long calcFib(unsigned long long elem){
         wait(NULL);
         read(pipefd[0], &buf, sizeof(buf));
         fibNum += buf;
-        std::cout << "Elem: " << elem << " Value: " << fibNum << std::endl;
+        cout << "Elem: " << elem << " Value: " << fibNum << endl;
+        outFile << "Elem: " << elem << " Value: " << fibNum << endl;
+        outFile.close();
         return fibNum;
     }
+}
+
+int findShorter(string &s1, string &s2){
+    if(s1.length() < s2.length())
+        return s1.length();
+    else
+        return s2.length();
 }
